@@ -1,0 +1,23 @@
+[package]
+name = "build_async"
+authors = ["Igor Y. Khomyakov <ikh@ikhsoftware.com>", "Dmitriy Kumshayev <dq@mail.com>"]
+version = "0.1.0"
+edition = "2021"
+#homepage = "https://www.ikhsoftware.com/build_async"
+keywords = ["async", "await"]
+categories = ["asynchronous", "concurrency", "no-std"]
+description = "Rust Macros to Unify Synchronous and Asynchronous Codebases"
+#documentation = "https://docs.rs/build_async"
+license = "GPL-3.0"
+readme = "README.md"
+repository = "https://github.com/ikhomyakov/build_async"
+rust-version = "1.79"
+
+
+[dependencies]
+syn = { version = "2.0", features = ["full"] }
+quote = "1.0"
+proc-macro2 = "1.0"
+
+[lib]
+proc-macro = true
