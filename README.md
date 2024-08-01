@@ -42,7 +42,7 @@ trait Writer {
     }
 }                   
                     
-impl<T: Write> Writer for T {
+impl<T: std::io::Write> Writer for T {
     type Error = std::io::Error;
 
     fn write(&mut self, bytes: &[u8]) -> Result<usize, Self::Error> {
@@ -84,7 +84,7 @@ impl<T: Encode> Encode for Box<T> {
 
 The `_await` macro assumes the presence of both synchronous and asynchronous versions of the function it is applied to, with the asynchronous version being async and differing in name only by the `_async` postfix. If these conventions aren't followed in the existing codebase, adapters like `Writer` can be implemented to bridge the gap.
 
-For real life examples see crates [cerdito](https://crates.io/crates/cerdito) and [rustbif](https://crates.io/crates/rustbif).
+For real-life examples, refer to crates [cerdito](https://crates.io/crates/cerdito) and [rustbif](https://crates.io/crates/rustbif).
 
 Finally, there is one peculiar detail about this library: We recommend importing macros implicitly using `use build_async::*;`. Otherwise, the explicit import statement will have to look like this: `use build_async::{_async, _await_sync, _await_async};`. This can be confusing because it raises questions like "Where is `_await`?" and "Why do I need to import `_await_sync` and `_await_async`?". The reason is that `_await` is a "pseudo-macro." It looks and feels like a macro, but it has never been defined. When the `_async` macro encounters `_await`, it replaces it with `_await_sync` or `_await_async`, depending on the context.
 
