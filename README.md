@@ -2,7 +2,7 @@
 
 The async/await mechanism has become a useful tool for handling asynchronous programming in I/O-bound applications. However, it introduces a significant challenge: async code is "contagious," meaning it cannot be used in synchronous contexts. Consequently, a developer who creates a library must provide two implementations: synchronous and asynchronous. A significant portion of the asynchronous implementation, which doesn’t require concurrency, ends up being redundant, describing exactly the same logic in a slightly different syntax.
 
-This library offers two macros, `#[_async]` and `_await!(...)`, to address the issue of managing non-concurrent code that must exist in both synchronous and asynchronous versions. These macros allow you to annotate such code, and the library will generate both the synchronous and asynchronous versions automatically. For example, the following code:
+This library offers two macros, `#[_async]` and `_await!(...)`, to address the issue of managing the code that must exist in both synchronous and asynchronous versions. These macros allow you to annotate such code, and the library will generate both the synchronous and asynchronous versions automatically. For example, the following code:
 
 ```rust
 use build_async::*;
@@ -26,9 +26,9 @@ async fn foo_async() {
     x.zoo_async().await;
 }
 ```
-The `#[_async]` macro can be applied to any non-async function or method definition, whether inside or outside of `impl` or `trait` definitions. This macro generates both synchronous and asynchronous versions of the function. The `_await!(...)` macro can be applied to explicit function or method calls within the function or method definitions marked with `#[_async]`. Depending on the context (synchronous or asynchronous), `_await!(...)` expands to either a synchronous call or an asynchronous call using `await`. To avoid name conflicts, the name of the asynchronous version produced by this mechanism is given the postfix `_async`.
+The `#[_async]` macro can be applied to any non-async function or method definition, whether inside or outside of `impl` or `trait` definitions. This macro generates both synchronous and asynchronous versions of the function. The `_await!(...)` macro can be applied function or method calls within the function or method definitions marked with `#[_async]`. Depending on the context (synchronous or asynchronous), `_await!(...)` expands to either a synchronous call or an asynchronous call using `await`. To avoid name conflicts, the name of the asynchronous version produced by this mechanism is given the postfix `_async`.
 
-Here is a more comprehensive example that demonstrates how these macros can be used within `trait` and `impl` definitions. This example also shows how they can be integrated with both synchronous and asynchronous traits and types, even when the `_async` naming convention is not followed:
+Here is a more comprehensive example that demonstrates how these macros can be used within `trait` and `impl` definitions:
 
 ```rust
 use build_async::*;
